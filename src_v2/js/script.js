@@ -198,3 +198,27 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
+
+
+function setName() {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+  });
+  let yourname = params['q'];
+  while (!(yourname && yourname.length > 0 && yourname.length < 20)) {
+      if (yourname && yourname.length >= 20) {
+          yourname = prompt('Ngắn thôi. Nhập lại tên đê:');
+      } else {
+          yourname = prompt('Nhập tên vào đây');
+      }
+  }
+  const nameEl = document.querySelector('#nameBox h1');
+  nameEl.textContent = yourname;
+}
+
+const nameBoxEl = document.createElement('div');
+nameBoxEl.id = 'nameBox'
+nameBoxEl.innerHTML = `<h1></h1>`
+
+document.body.appendChild(nameBoxEl)
+setName()
