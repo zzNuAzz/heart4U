@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Tuấn Anh" />
-    <link rel="shortcut icon" href="">
+    <link rel="shortcut icon" href="./assets/favicon.png">
     <title>Heart4U</title>
     <script src="./js/mouse_slide.js"></script>
     <script src="./js/clicklove.js"></script>
@@ -261,14 +261,32 @@
       canvas.height = canvas.clientHeight;
     }
     window.onresize = onResize;
+
+    function setName() {
+      const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
+      });
+      let yourname = params['q']
+      while (!(yourname && yourname.length > 0 && yourname.length < 20)) {
+        if(yourname && yourname.length >= 20) {
+          yourname = prompt("Ngắn thôi. Nhập lại tên đê:");
+        } else {
+          yourname = prompt("Nhập tên vào đây");
+        }
+      } 
+      const nameEl = document.querySelector('#nameBox h1')
+      nameEl.textContent = yourname;
+
+    }
 // delay rendering bootstrap
-    setTimeout(function() {
-      onResize();
-      render();
-    }, 10);
+  setTimeout(function() {
+    setName()
+    onResize();
+    render();
+  }, 10);
   })(document.getElementById('pinkboard'));
 </script>
-<div class="namebox">
+<div class="namebox" id="nameBox">
   <h1></h1>
 </div>
 </body>
